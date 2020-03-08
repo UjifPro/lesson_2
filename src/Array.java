@@ -123,8 +123,8 @@ public class Array {
 
     /**
      * Метод смещает все элементы массива на n позиций. Если n < 0, смещение влево, в противном случаи вправо.
-     * @param arr
-     * @param n
+     * @param arr ссылка на массив
+     * @param n смещение
      */
     private static void pull(int arr[], int n){
         if(n<0){
