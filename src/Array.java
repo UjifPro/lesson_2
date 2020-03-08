@@ -11,11 +11,10 @@ public class Array {
         multiplication(arrMulti);
 
         int[] arrMinMax = {1, 2, 3, 14, 5, 6, 7};
-        int maxValue = searchMinMax(arrMinMax, false);
-        int minValue = searchMinMax(arrMinMax, true);
+        int maxValue = searchMax(arrMinMax);
+        int minValue = searchMin(arrMinMax);
 
-
-        int[][] arrDiagonal = new int[10][10];
+        int[][] arrDiagonal = new int[11][11];
         diagonalSet(arrDiagonal);
 
         int[] arrBalance = {1,1,1,1};
@@ -23,55 +22,83 @@ public class Array {
 
         int[] arrPull = {1,2,3,4,5,6,7,8,9,10};
         pull(arrPull, 7);
-        for (int i = 0; i < arrPull.length; i++) {
-            System.out.println(arrPull[i]);
-        }
-
     }
 
+    /**
+     *  Mетод, заменяет в принятом массиве 0 на 1, 1 на 0;
+     * @param arr - ссылка на массив
+     */
     private static void replacement(int[] arr){
          for(int i=0; i<arr.length;i++){
             arr[i] =(arr[i]==1)?0:1;
         }
     }
 
+    /**
+     * Заполняет массив arr значениями 1 4 7 10 13 16 19 22;
+     * @param arr- ссылка на массив
+     */
     private static void setArray(int[] arr){
         for(int i=0, y =1; i<arr.length; i++, y +=3){
             arr[i] = y;
         }
     }
 
+    /**
+     *  Умножает числа меньше 6 из массива на 2
+     * @param arr- ссылка на массив
+     */
     private static void multiplication(int[] arr){
         for(int i=0; i<arr.length; i++){
             if (arr[i]<6)
                     arr[i] *= 2;
         }
-
     }
 
-    private static int searchMinMax(int[] arr, boolean flag){
+    /**
+     * Метод поиска минимального элемента массива;
+     * @param arr - ссылка на массив
+     * @return value - значение минимального элемента в массиве
+     */
+    private static int searchMin(int[] arr){
         int value=arr[0];
         for(int i = 0; i<arr.length; i++){
-            if(flag) {
-                //maximum
-                if (arr[i] > value)
-                    value = arr[i];
-            }
-            else{
-                //minimum
-                if(arr[i] < value)
-                    value=arr[i];
-            }
+          if(arr[i] < value)
+              value=arr[i];
         }
         return value;
     }
 
-    private static void diagonalSet(int arr[][]){
-        for (int i = 0; i < arr.length ; i++) {
-            arr[i][i] = 1;
+    /**
+     * Метод поиска максимального элемента массива;
+     * @param arr - ссылка на массив
+     * @return value - значение максимального элемента в массиве
+     */
+    private static int searchMax(int[] arr){
+        int value=arr[0];
+        for(int i = 0; i<arr.length; i++){
+                if (arr[i] > value)
+                    value = arr[i];
         }
+        return value;
     }
 
+    /**
+     * Метод заполняет диагонали массива единицами
+     * @param arr
+     */
+    private static void diagonalSet(int arr[][]){
+        for (int i = 0, j=arr.length-1; i<arr.length ;i++, j--){
+            arr[i][j] = 1;
+            arr[i][i] = 1;
+        }
+
+    }
+
+    /**
+     * Метод определяет: есть ли в массиве место где сумма правой часли = сумме левой
+     * @param arr
+     */
     private static boolean checkBalance(int arr[]){
         boolean result = false;
         for (int i = 0; i < arr.length ; i++) {
@@ -79,11 +106,11 @@ public class Array {
             int right = 0;
 
             for (int j = 0; j < i; j++) {
-                left = left + arr[j];
+                left += arr[j];
             }
 
             for (int q = i; q < arr.length ; q++) {
-                right = right + arr[q];
+                right += arr[q];
             }
 
             if (left == right){
@@ -94,8 +121,12 @@ public class Array {
         return result;
     }
 
+    /**
+     * Метод смещает все элементы массива на n позиций. Если n < 0, смещение влево, в противном случаи вправо.
+     * @param arr
+     * @param n
+     */
     private static void pull(int arr[], int n){
-
         if(n<0){
             for (int i = 0; i < Math.abs(n); i++) {
                 int newValue = arr[arr.length-1];
